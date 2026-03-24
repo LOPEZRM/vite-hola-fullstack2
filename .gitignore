@@ -1,0 +1,14 @@
+node_modules
+.env
+dist
+dist-ssr
+*.local
+.terraform/
+*.tfstate
+*.tfstate.backup
+*.tfvars
+*.log
+.DS_Store
+.vscode/*
+!.vscode/extensions.json
+.idea
