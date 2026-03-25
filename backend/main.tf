@@ -1,6 +1,5 @@
 # =============================================================================
 # Backend: API de tareas (DynamoDB + Lambda + API Gateway HTTP)
-# Despliegue: terraform init && terraform apply
 # =============================================================================
 
 terraform {
@@ -21,15 +20,32 @@ terraform {
   }
 }
 
+# 1. DECLARACIÓN DE VARIABLES (Deben estar afuera)
+variable "aws_access_key" {}
+variable "aws_secret_key" {}
+variable "aws_region"     { default = "us-east-1" }
+
+# Variables extra para evitar advertencias del .tfvars
+variable "github_token"         { default = "" }
+variable "repository"           { default = "" }
+variable "branch_name"          { default = "" }
+variable "app_root"             { default = "" }
+variable "api_url"              { default = "" }
+variable "cognito_user_pool_id" { default = "" }
+variable "cognito_client_id"    { default = "" }
+
+# 2. CONFIGURACIÓN DEL PROVEEDOR
 provider "aws" {
-  region = "us-east-1"
+  region     = var.aws_region
+  access_key = var.aws_access_key
+  secret_key = var.aws_secret_key
 }
 
 # ---------------------------------------------------------------------------
 # DynamoDB
 # ---------------------------------------------------------------------------
 resource "aws_dynamodb_table" "tareas" {
-  name         = "tareas-hola-fullstack"
+  name = "tareas-fullstack-v3"
   billing_mode = "PAY_PER_REQUEST"
   hash_key     = "id"
 
@@ -43,7 +59,7 @@ resource "aws_dynamodb_table" "tareas" {
 # Lambda
 # ---------------------------------------------------------------------------
 resource "aws_iam_role" "lambda_tasks" {
-  name = "lambda-tasks-api-role"
+  name = "lambda-tasks-role-v3"
 
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
@@ -95,7 +111,7 @@ data "archive_file" "lambda_tasks" {
 
 resource "aws_lambda_function" "tasks_api" {
   filename         = data.archive_file.lambda_tasks.output_path
-  function_name    = "tasks-api-hola-fullstack"
+  function_name = "tasks-api-v3"
   role             = aws_iam_role.lambda_tasks.arn   # Lambda exige ARN del rol, no id
   handler          = "index.handler"
   source_code_hash = data.archive_file.lambda_tasks.output_base64sha256
