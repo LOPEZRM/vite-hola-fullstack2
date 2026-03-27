@@ -23,8 +23,17 @@
   font-size: 1rem;
   border-radius: 8px;
   border: 1px solid #444;
-  background-color: #1a1a1a;
-  color: inherit;
+  background-color: #fff;
+  color: #000 !important;
+}
+
+.add-form input::placeholder {
+  color: #666;
+}
+
+.add-form input:autofill {
+  -webkit-autofill-text-fill: #000 !important;
+  -webkit-autofill-background-fill: #fff !important;
 }
 
 .add-form input:focus {
@@ -32,9 +41,15 @@
   border-color: #646cff;
 }
 
-.add-form button {
-  padding: 0.6em 1.2em;
-  white-space: nowrap;
+.add-form input {
+  flex: 1;
+  padding: 0.6em 0.8em;
+  font-size: 1rem;
+  border-radius: 8px;
+  border: 1px solid #444;
+  background-color: #fff;
+  color: #000000 !important; /* Forzamos el color negro */
+  opacity: 1 !important;     /* Aseguramos que no esté transparente */
 }
 
 .error {
@@ -88,6 +103,7 @@
   flex: 1;
   min-width: 0;
   word-break: break-word;
+  color: #000;
 }
 
 .task .edit-input {
@@ -153,7 +169,7 @@
   .add-form input {
     border-color: #ccc;
     background-color: #fff;
-    color: #213547;
+    color: #000;
   }
 
   .task {
@@ -188,4 +204,16 @@
   .btn-small.danger:hover:not(:disabled) {
     background-color: rgba(200, 68, 68, 0.1);
   }
+}
+.add-form input:focus {
+  outline: none;
+  border-color: #646cff;
+  color: #000000 !important;
+}
+
+.add-form input:-webkit-autofill,
+.add-form input:-webkit-autofill:hover, 
+.add-form input:-webkit-autofill:focus {
+  -webkit-text-fill-color: #000000 !important;
+  transition: background-color 5000s ease-in-out 0s;
 }

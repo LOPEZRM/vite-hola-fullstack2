@@ -162,13 +162,13 @@ input {
   border-radius: var(--radius);
   border: 1px solid var(--border);
   background: var(--surface2);
-  color: var(--text);
+  color: #000000 !important;
   font-size: 0.95rem;
   font-family: inherit;
   transition: border-color 0.2s, box-shadow 0.2s;
   outline: none;
 }
-input::placeholder { color: var(--text-muted); }
+input::placeholder { color: var(--text-muted) !important; }
 input:focus {
   border-color: var(--accent);
   box-shadow: 0 0 0 3px rgba(124,111,255,0.2);
