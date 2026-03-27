@@ -1,38 +1,155 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+/* ── Reset & Base ───────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
 :root {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  line-height: 1.5;
-  color-scheme: dark;
-  color: #000000;
-  /* Texto blanco para que se vea bien */
-  background-color: #1a1a1a;
-  /* Fondo oscuro elegante */
+  --bg:        #0f0f14;
+  --surface:   rgba(255,255,255,0.05);
+  --surface2:  rgba(255,255,255,0.08);
+  --border:    rgba(255,255,255,0.1);
+  --accent:    #7c6fff;
+  --accent2:   #a78bfa;
+  --success:   #34d399;
+  --warning:   #fbbf24;
+  --danger:    #f87171;
+  --text:      #e2e8f0;
+  --text-muted:#94a3b8;
+  --radius:    14px;
+  --shadow:    0 8px 32px rgba(0,0,0,0.4);
 }
 
 body {
-  margin: 0;
+  font-family: 'Inter', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
   display: flex;
   justify-content: center;
-  /* Centra horizontalmente */
-  padding-top: 50px;
-  /* Espacio arriba */
-  min-height: 100vh;
+  padding: 40px 16px 80px;
+  background-image:
+    radial-gradient(ellipse at 20% 20%, rgba(124,111,255,0.12) 0%, transparent 60%),
+    radial-gradient(ellipse at 80% 80%, rgba(167,139,250,0.08) 0%, transparent 60%);
 }
 
+/* ── Layout ─────────────────────────────────────────────────────── */
 .container {
   width: 100%;
-  max-width: 500px;
-  padding: 20px;
-  text-align: center;
+  max-width: 560px;
 }
-
 
 h1 {
-  font-size: 2.5em;
-  color: #646cff;
-  /* Título en color violeta/azul */
+  font-size: 2rem;
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 24px;
+  background: linear-gradient(135deg, #a78bfa, #7c6fff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  letter-spacing: -0.5px;
 }
 
-/* Estilos para el formulario de entrada */
+/* ── Panel ──────────────────────────────────────────────────────── */
+.private-view {
+  background: var(--surface);
+  backdrop-filter: blur(20px);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 28px;
+  box-shadow: var(--shadow);
+  animation: fadeUp 0.4s ease;
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── Status bar ─────────────────────────────────────────────────── */
+.status-bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  padding: 6px 12px;
+  border-radius: 999px;
+  margin-bottom: 20px;
+  width: fit-content;
+  transition: background 0.3s;
+}
+.status-bar.online  { background: rgba(52,211,153,0.12); color: var(--success); border: 1px solid rgba(52,211,153,0.25); }
+.status-bar.offline { background: rgba(251,191,36,0.12);  color: var(--warning);  border: 1px solid rgba(251,191,36,0.3); }
+
+.status-dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: currentColor;
+  box-shadow: 0 0 6px currentColor;
+  animation: pulse 2s infinite;
+}
+@keyframes pulse {
+  0%, 100% { opacity: 1; } 50% { opacity: 0.4; }
+}
+
+.pending-badge {
+  background: rgba(251,191,36,0.25);
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: 0.72rem;
+}
+
+/* ── Notification ───────────────────────────────────────────────── */
+.notification {
+  padding: 10px 16px;
+  border-radius: var(--radius);
+  font-size: 0.85rem;
+  font-weight: 500;
+  margin-bottom: 16px;
+  animation: slideIn 0.3s ease;
+}
+@keyframes slideIn {
+  from { opacity: 0; transform: translateX(-10px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+.notif-success { background: rgba(52,211,153,0.15); color: var(--success); border: 1px solid rgba(52,211,153,0.3); }
+.notif-warning { background: rgba(251,191,36,0.15);  color: var(--warning);  border: 1px solid rgba(251,191,36,0.3); }
+.notif-error   { background: rgba(248,113,113,0.15); color: var(--danger);   border: 1px solid rgba(248,113,113,0.3); }
+.notif-info    { background: rgba(124,111,255,0.15); color: var(--accent2);  border: 1px solid rgba(124,111,255,0.3); }
+
+/* ── Panel header ───────────────────────────────────────────────── */
+.panel-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 24px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--border);
+}
+
+.avatar {
+  width: 46px; height: 46px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--accent), var(--accent2));
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.3rem; font-weight: 700; color: white;
+  flex-shrink: 0;
+}
+
+.panel-header h2 {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.username-label {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  margin-top: 2px;
+}
+
+/* ── Formulario ─────────────────────────────────────────────────── */
 .form {
   display: flex;
   gap: 10px;
@@ -41,59 +158,114 @@ h1 {
 
 input {
   flex-grow: 1;
-  padding: 12px;
-  border-radius: 8px;
-  border: 1px solid #333;
-  background: #2a2a2a;
-  color: white;
+  padding: 12px 16px;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  background: var(--surface2);
+  color: var(--text);
+  font-size: 0.95rem;
+  font-family: inherit;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  outline: none;
+}
+input::placeholder { color: var(--text-muted); }
+input:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(124,111,255,0.2);
 }
 
-button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  background-color: #646cff;
+.add-btn {
+  padding: 12px 20px;
+  border-radius: var(--radius);
+  border: none;
+  background: linear-gradient(135deg, var(--accent), var(--accent2));
   color: white;
+  font-weight: 700;
+  font-size: 0.9rem;
   cursor: pointer;
-  font-weight: bold;
+  white-space: nowrap;
+  transition: transform 0.15s, box-shadow 0.15s;
+  font-family: inherit;
 }
-
-button:hover {
-  background-color: #535bf2;
+.add-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 16px rgba(124,111,255,0.4);
 }
+.add-btn:active { transform: translateY(0); }
 
-/* --- LA LISTA DE TAREAS --- */
+/* ── Lista ──────────────────────────────────────────────────────── */
 ul {
   list-style: none;
-  padding: 0;
-  text-align: left;
-}
-
-li {
-  background: #333;
-  margin-bottom: 10px;
-  padding: 15px;
-  border-radius: 8px;
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 24px;
+}
+
+.task-item {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 14px 16px;
+  display: flex;
   align-items: center;
-  border-left: 5px solid #646cff;
-  /* Detalle visual azul */
+  gap: 10px;
+  animation: fadeUp 0.25s ease;
+  transition: background 0.2s;
+}
+.task-item:hover { background: rgba(255,255,255,0.09); }
+.task-item.pending { border-left: 3px solid var(--warning); opacity: 0.75; }
+
+.task-title {
+  flex-grow: 1;
+  font-size: 0.95rem;
+  color: var(--text);
 }
 
+.sync-icon {
+  font-size: 0.85rem;
+  color: var(--warning);
+}
+
+.empty-state {
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  padding: 30px;
+  border: 1px dashed var(--border);
+  border-radius: var(--radius);
+}
+
+/* ── Botones ────────────────────────────────────────────────────── */
 .delete-btn {
-  background-color: #ff4d4d;
-  padding: 5px 10px;
-  font-size: 0.8em;
+  background: transparent;
+  border: 1px solid rgba(248,113,113,0.3);
+  color: var(--danger);
+  border-radius: 8px;
+  width: 30px; height: 30px;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer;
+  font-size: 0.85rem;
+  transition: background 0.2s, transform 0.15s;
+  flex-shrink: 0;
+  font-family: inherit;
 }
-
 .delete-btn:hover {
-  background-color: #e60000;
+  background: rgba(248,113,113,0.15);
+  transform: scale(1.1);
 }
 
 .signout-btn {
-  margin-top: 30px;
-  background-color: transparent;
-  border: 1px solid #ff4d4d;
-  color: #ff4d4d;
+  width: 100%;
+  padding: 12px;
+  background: transparent;
+  border: 1px solid rgba(248,113,113,0.35);
+  color: var(--danger);
+  border-radius: var(--radius);
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+  font-family: inherit;
 }
+.signout-btn:hover { background: rgba(248,113,113,0.1); }
